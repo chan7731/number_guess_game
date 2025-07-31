@@ -18,11 +18,14 @@ const NumberGuessGame = () => {
 
     if (num === target) {
       setMessage(`🎉 정답! ${target}입니다.`);
+      setIsWin(true);
     } else if (num < target) {
       setMessage("⬆️ 더 큰 수를 입력하세요.");
     } else {
       setMessage("⬇️ 더 작은 수를 입력하세요.");
     }
+
+    setGuess("");
   };
 
   return (
