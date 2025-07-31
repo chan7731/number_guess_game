@@ -7,6 +7,7 @@ const NumberGuessGame = () => {
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState("");
   const [isWin, setIsWin] = useState(false);
+  const [history, setHistory] = useState([]);
 
   const handleSubmit = () => {
     console.log("타겟:", target);
@@ -16,6 +17,8 @@ const NumberGuessGame = () => {
       setMessage("⚠️ 1부터 100 사이의 숫자를 입력하세요.");
       return;
     }
+
+    setHistory([...history, num]);
 
     if (num === target) {
       setMessage(`🎉 정답! ${target}입니다.`);
@@ -27,6 +30,13 @@ const NumberGuessGame = () => {
     }
 
     setGuess("");
+  };
+
+  const handleRestart = () => {
+    setTarget(getRandomTarget);
+    setMessage("");
+    setIsWin(false);
+    setHistory([]);
   };
 
   return (
@@ -42,7 +52,7 @@ const NumberGuessGame = () => {
         disabled={isWin}
       />
       <button
-        className="bg-sky-400 text-white px-6 py-2 rounded-lg hover:bg-blue-500 disabled:opacity-50"
+        className="bg-blue-400 text-white px-6 py-2 rounded-lg hover:bg-blue-500 disabled:opacity-50"
         onClick={handleSubmit}
         disabled={isWin}
       >
@@ -50,6 +60,24 @@ const NumberGuessGame = () => {
       </button>
 
       <p className="text-lg font-medium">{message}</p>
+
+      <div className="w-full">
+        <h2 className="font-semibold mb-2">입력 기록</h2>
+        <ul className="list-disc list-inside text-sm text-gray-600">
+          {history.map((num, index) => (
+            <li key={index}>{num}</li>
+          ))}
+        </ul>
+      </div>
+
+      {isWin && (
+        <button
+          className="mt-4 px-5 py-2 border border-gray-400 rounded-lg hover:bg-gray-100"
+          onClick={handleRestart}
+        >
+          다시 시작
+        </button>
+      )}
     </div>
   );
 };
