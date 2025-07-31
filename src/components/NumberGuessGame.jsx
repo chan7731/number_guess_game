@@ -6,6 +6,7 @@ const NumberGuessGame = () => {
   const [target, setTarget] = useState(getRandomTarget);
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState("");
+  const [isWin, setIsWin] = useState(false);
 
   const handleSubmit = () => {
     console.log("타겟:", target);
@@ -38,10 +39,12 @@ const NumberGuessGame = () => {
         type="number"
         value={guess}
         onChange={(e) => setGuess(e.target.value)}
+        disabled={isWin}
       />
       <button
-        className="bg-sky-400 text-white px-6 py-2 rounded-lg hover:bg-blue-500"
+        className="bg-sky-400 text-white px-6 py-2 rounded-lg hover:bg-blue-500 disabled:opacity-50"
         onClick={handleSubmit}
+        disabled={isWin}
       >
         제출
       </button>
